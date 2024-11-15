@@ -42,6 +42,7 @@ mother(X, Y) :- parent(X, Y), female(X).
 father(X, Y) :- parent(X, Y), male(X).
 grandmother(X, Y) :- parent(X, Z), parent(Z, Y), female(X).
 grandfather(X, Y) :- parent(X, Z), parent(Z, Y), male(X).
+sister(X, X) :-, fail.
 sister(X, Y) :- parent(Z, X), parent(Z, Y), female(X).
 brother(X, Y) :- parent(Z, X), parent(Z, Y), male(X).
 cousin(X, Y) :- grandmother(Z, X), grandmother(Z, Y).
