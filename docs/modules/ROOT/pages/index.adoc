@@ -1,0 +1,36 @@
+= CS 424 Programs
+Bailee Segars
+v1.0, 2025-01-13
+:doctitle: CS 424 Programs
+:nofooter:
+:toc:
+:experimental:
+:icons: font
+
+== Overview
+=== Program 1
+
+==== Requirements
+* The program must be completed in Go
+* The user shall be prompted to enter the name of their data file
+* Data files contain the following information:
+** [First name] [Last name] [Plate appearances] [At bats] [Singles] [Doubles] [Triples] [Home runs] [Walks] [Hits by pitch]
+* The program shall read in the data file the user specifies
+* The program shall calculate each player's stats, such as batting average, slugging percentage, and on base percentage
+* The program shall output each player's stats in a table, ordered from best slugging percentage to worst slugging percentage
+* The program shall output a separate section for entries with errors, such as invalid characters or incorrect number of data points
+
+==== Why Go?
+* **Speed**: Go is a compiled language, allowing it to perform data operations quickly
+* **Efficiency**: Go uses system resources efficiently by utilizing dynamic stack sizing that starts in kilobytes rather than megabytes
+* **Concurrency**: Goroutines can run processes concurrently
++
+[source, go]
+.Concurrency Example
+----
+include::../examples/concurrency.go[]
+----
+
+In this example from https://go.dev/play/p/PlxRje95TtR[The Go Playground], the `go` keyword signals that the `hello()` function is called as a goroutine and will run while `main()` is running. The `time.Sleep()` requires the program to wait before continuing with `main()`. Without the wait, the program will exit before printing `Hello world goroutine`.
+
+==== My Solution
