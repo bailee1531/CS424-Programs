@@ -1,16 +1,18 @@
 = CS 424 Programs
 Bailee Segars
-v1.0, 2025-01-13
+v1.0, 2025-01-21
 :doctitle: CS 424 Programs
 :nofooter:
 :toc:
+:toclevels: 4
 :experimental:
 :icons: font
 
 == Overview
-=== Program 1
+This document contains information about each programming language used in my Principles of Programming Languages course, as well as my solution to each of the assignments.
 
-==== Requirements
+== Program 1
+=== Requirements
 * The program must be completed in Go
 * The user shall be prompted to enter the name of their data file
 * Data files contain the following information:
@@ -20,7 +22,9 @@ v1.0, 2025-01-13
 * The program shall output each player's stats in a table, ordered from best slugging percentage to worst slugging percentage
 * The program shall output a separate section for entries with errors, such as invalid characters or incorrect number of data points
 
-==== Why Go?
+<<<
+
+=== Why Go?
 * **Speed**: Go is a compiled language, allowing it to perform data operations quickly
 * **Efficiency**: Go uses system resources efficiently by utilizing dynamic stack sizing that starts in kilobytes rather than megabytes
 * **Concurrency**: Goroutines can run processes concurrently
@@ -28,9 +32,153 @@ v1.0, 2025-01-13
 [source, go]
 .Concurrency Example
 ----
-include::../examples/concurrency.go[]
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func hello() {
+	fmt.Println("Hello world goroutine")
+}
+func main() {
+	go hello()
+	time.Sleep(1 * time.Second)
+	fmt.Println("main function")
+}
+
 ----
 
 In this example from https://go.dev/play/p/PlxRje95TtR[The Go Playground], the `go` keyword signals that the `hello()` function is called as a goroutine and will run while `main()` is running. The `time.Sleep()` requires the program to wait before continuing with `main()`. Without the wait, the program will exit before printing `Hello world goroutine`.
 
-==== My Solution
+=== My Solution
+==== Define Functions
+. First, I imported the necessary packages for this program.
++
+[source, go]
+----
+include::../examples/program1.go[lines=3..11]
+----
+
+* `bufio:` Standard Go library that provides buffered I/O, which allows the program to read/write data in chunks instead of one byte at a time
+* `fmt:` Format package. Allows for formatting I/O
+* `os:` Provides a platform-independent interface to operating system functionality
+* `regexp:` Implements regular expression search
+* `sort:` Provides functionality to sort. `O(nlogn)` time complexity, where n is the length of the slice
+* `strconv:` Implements conversions to and from string representation of basic data types
+* `strings:` Simple functions to manipulate UTF-8 encoded strings
+
+. Next, I created two different structs - one that contains information about the player, and one that contains the line information for invalid data.
++
+[source, go]
+----
+include::../examples/program1.go[lines=13..28]
+----
+
+. I then created the functions for each calculation.
++
+.Batting Average
+[source, go]
+----
+include::../examples/program1.go[lines=30..39]
+----
++
+.Slugging Percentage
+[source, go]
+----
+include::../examples/program1.go[lines=41..51]
+----
++
+.On Base Percentage
+[source, go]
+----
+include::../examples/program1.go[lines=53..62]
+----
++
+. To handle errors, I used a regex to check each line in the data file. The regex checked that all data after the first name and last name was in a numerical format.
++
+[source, go]
+----
+include::../examples/program1.go[lines=64..83]
+----
++
+. To format the output of players and the errors, I created the following functions:
++
+[source, go]
+.Player Output
+----
+include::../examples/program1.go[lines=85..98]
+----
++
+[source, go]
+.Error Output
+----
+include::../examples/program1.go[lines=100..112]
+----
+
+Now that my functions have been defined, I can use them in `func main()`.
+
+==== Reading in the input file
+. Create scanner variables.
++
+[source, go]
+----
+include::../examples/program1.go[lines=115..119]
+----
+
+. Create slices of structs.
++
+[source, go]
+----
+include::../examples/program1.go[lines=121..123]
+----
+
+. Scan the keyboard for the file name, then open the file.
++
+[source, go]
+----
+include::../examples/program1.go[lines=125..136]
+----
+
+. Scan the file. This will be a for loop, since it needs to scan as long as the file still has data.
++
+[source, go]
+----
+include::../examples/program1.go[lines=138..187]
+----
++
+* Inside of the for loop to scan the file, the program is doing error checking and calculating the stats for each player.
++
+NOTE: The types of errors that could be present in this assignment were not exhaustive. This assignment required error checking for lines that did not have enough data and lines that had invalid characters in the data.
+
+. Sort the player list in descending order of calculated slugging percentage.
++
+[source, go]
+----
+include::../examples/program1.go[lines=189..191]
+----
+
+. Sort the error list in ascending order of line number.
++
+[source, go]
+----
+include::../examples/program1.go[lines=193..195]
+----
+
+. Call the printing functions to print the player stats and the error list.
++
+[source, go]
+----
+include::../examples/program1.go[lines=197..201]
+----
+
+. Close the file
++
+[source, go]
+----
+include::../examples/program1.go[lines=211]
+----
+
+==== Example Output
+image::../images/example-output.png[]
