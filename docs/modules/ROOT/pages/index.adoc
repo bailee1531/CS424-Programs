@@ -6,6 +6,7 @@ v1.0, 2025-01-21
 :toc:
 :toclevels: 4
 :experimental:
+:imagesdir: modules/ROOT/images
 :icons: font
 
 == Overview
@@ -181,4 +182,4 @@ include::../examples/program1.go[lines=211]
 ----
 
 ==== Example Output
-image::../images/example-output.png[]
+image::example-output.png[]
